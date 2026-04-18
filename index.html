@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCare Assistant - Your Personal Health Companion</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <h1>MediCare Assistant</h1>
+                </div>
+                <nav class="nav">
+                    <button class="nav-btn active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </button>
+                    <button class="nav-btn" data-section="symptoms">
+                        <i class="fas fa-stethoscope"></i>
+                        Symptoms
+                    </button>
+                    <button class="nav-btn" data-section="health">
+                        <i class="fas fa-chart-line"></i>
+                        Health Metrics
+                    </button>
+                    <button class="nav-btn" data-section="medications">
+                        <i class="fas fa-pills"></i>
+                        Medications
+                    </button>
+                    <button class="nav-btn" data-section="appointments">
+                        <i class="fas fa-calendar-alt"></i>
+                        Appointments
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section class="section active" id="dashboard">
+                <div class="section-header">
+                    <h2>Health Dashboard</h2>
+                    <p>Your health overview at a glance</p>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="card health-summary">
+                        <div class="card-header">
+                            <h3><i class="fas fa-heart"></i> Health Summary</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="health-metric">
+                                <span class="metric-label">Overall Health Score</span>
+                                <div class="health-score">
+                                    <div class="score-circle">
+                                        <span class="score-value" id="healthScore">85</span>
+                                        <span class="score-unit">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card quick-actions">
+                        <div class="card-header">
+                            <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="action-grid">
+                                <button class="action-btn" onclick="navigateToSection('symptoms')">
+                                    <i class="fas fa-search"></i>
+                                    Check Symptoms
+                                </button>
+                                <button class="action-btn" onclick="calculateBMI()">
+                                    <i class="fas fa-calculator"></i>
+                                    BMI Calculator
+                                </button>
+                                <button class="action-btn" onclick="addMedication()">
+                                    <i class="fas fa-plus"></i>
+                                    Add Medication
+                                </button>
+                                <button class="action-btn" onclick="scheduleAppointment()">
+                                    <i class="fas fa-calendar-plus"></i>
+                                    Book Appointment
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card recent-activity">
+                        <div class="card-header">
+                            <h3><i class="fas fa-clock"></i> Recent Activity</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="activity-list" id="activityList">
+                                <div class="activity-item">
+                                    <i class="fas fa-pills activity-icon"></i>
+                                    <div class="activity-content">
+                                        <span class="activity-text">Took Vitamin D</span>
+                                        <span class="activity-time">2 hours ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Symptoms Section -->
+            <section class="section" id="symptoms">
+                <div class="section-header">
+                    <h2>Symptom Checker</h2>
+                    <p>Describe your symptoms for preliminary assessment</p>
+                </div>
+
+                <div class="symptoms-container">
+                    <div class="card symptom-input">
+                        <div class="card-header">
+                            <h3><i class="fas fa-stethoscope"></i> Describe Your Symptoms</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="input-group">
+                                <label for="symptomDescription">What symptoms are you experiencing?</label>
+                                <textarea id="symptomDescription" placeholder="Describe your symptoms in detail..."></textarea>
+                            </div>
+                            
+                            <div class="symptom-categories">
+                                <h4>Common Symptom Categories:</h4>
+                                <div class="category-grid">
+                                    <button class="category-btn" onclick="addSymptomCategory('headache')">
+                                        <i class="fas fa-head-side-cough"></i>
+                                        Headache
+                                    </button>
+                                    <button class="category-btn" onclick="addSymptomCategory('fever')">
+                                        <i class="fas fa-thermometer-half"></i>
+                                        Fever
+                                    </button>
+                                    <button class="category-btn" onclick="addSymptomCategory('cough')">
+                                        <i class="fas fa-lungs"></i>
+                                        Cough
+                                    </button>
+                                    <button class="category-btn" onclick="addSymptomCategory('fatigue')">
+                                        <i class="fas fa-tired"></i>
+                                        Fatigue
+                                    </button>
+                                    <button class="category-btn" onclick="addSymptomCategory('nausea')">
+                                        <i class="fas fa-dizzy"></i>
+                                        Nausea
+                                    </button>
+                                    <button class="category-btn" onclick="addSymptomCategory('pain')">
+                                        <i class="fas fa-band-aid"></i>
+                                        Body Pain
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button class="primary-btn" onclick="analyzeSymptoms()">
+                                <i class="fas fa-search"></i>
+                                Analyze Symptoms
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card symptom-results" id="symptomResults" style="display: none;">
+                        <div class="card-header">
+                            <h3><i class="fas fa-clipboard-list"></i> Analysis Results</h3>
+                        </div>
+                        <div class="card-content" id="symptomAnalysis">
+                            <!-- Results will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Health Metrics Section -->
+            <section class="section" id="health">
+                <div class="section-header">
+                    <h2>Health Metrics</h2>
+                    <p>Track and monitor your vital health indicators</p>
+                </div>
+
+                <div class="health-metrics-grid">
+                    <div class="card bmi-calculator">
+                        <div class="card-header">
+                            <h3><i class="fas fa-weight"></i> BMI Calculator</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="input-row">
+                                <div class="input-group">
+                                    <label for="height">Height (cm)</label>
+                                    <input type="number" id="height" placeholder="170">
+                                </div>
+                                <div class="input-group">
+                                    <label for="weight">Weight (kg)</label>
+                                    <input type="number" id="weight" placeholder="70">
+                                </div>
+                            </div>
+                            <button class="primary-btn" onclick="calculateBMI()">Calculate BMI</button>
+                            <div class="bmi-result" id="bmiResult" style="display: none;">
+                                <div class="bmi-value" id="bmiValue"></div>
+                                <div class="bmi-category" id="bmiCategory"></div>
+                                <div class="bmi-advice" id="bmiAdvice"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card vital-signs">
+                        <div class="card-header">
+                            <h3><i class="fas fa-heartbeat"></i> Vital Signs Tracker</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="vital-input-grid">
+                                <div class="input-group">
+                                    <label for="bloodPressure">Blood Pressure</label>
+                                    <input type="text" id="bloodPressure" placeholder="120/80">
+                                </div>
+                                <div class="input-group">
+                                    <label for="heartRate">Heart Rate (bpm)</label>
+                                    <input type="number" id="heartRate" placeholder="72">
+                                </div>
+                                <div class="input-group">
+                                    <label for="temperature">Temperature (°F)</label>
+                                    <input type="number" id="temperature" placeholder="98.6">
+                                </div>
+                                <div class="input-group">
+                                    <label for="oxygenSat">Oxygen Saturation (%)</label>
+                                    <input type="number" id="oxygenSat" placeholder="98">
+                                </div>
+                            </div>
+                            <button class="primary-btn" onclick="recordVitals()">Record Vitals</button>
+                        </div>
+                    </div>
+
+                    <div class="card health-history">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-line"></i> Health History</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="history-list" id="healthHistory">
+                                <!-- Health history will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Medications Section -->
+            <section class="section" id="medications">
+                <div class="section-header">
+                    <h2>Medication Management</h2>
+                    <p>Keep track of your medications and set reminders</p>
+                </div>
+
+                <div class="medications-container">
+                    <div class="card add-medication">
+                        <div class="card-header">
+                            <h3><i class="fas fa-plus-circle"></i> Add New Medication</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="medication-form">
+                                <div class="input-row">
+                                    <div class="input-group">
+                                        <label for="medicationName">Medication Name</label>
+                                        <input type="text" id="medicationName" placeholder="e.g., Aspirin">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="dosage">Dosage</label>
+                                        <input type="text" id="dosage" placeholder="e.g., 100mg">
+                                    </div>
+                                </div>
+                                <div class="input-row">
+                                    <div class="input-group">
+                                        <label for="frequency">Frequency</label>
+                                        <select id="frequency">
+                                            <option value="once">Once daily</option>
+                                            <option value="twice">Twice daily</option>
+                                            <option value="thrice">Three times daily</option>
+                                            <option value="custom">Custom</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="medicationTime">Time</label>
+                                        <input type="time" id="medicationTime">
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label for="notes">Notes (optional)</label>
+                                    <textarea id="notes" placeholder="Additional notes about this medication..."></textarea>
+                                </div>
+                                <button class="primary-btn" onclick="addMedication()">
+                                    <i class="fas fa-plus"></i>
+                                    Add Medication
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card medication-list">
+                        <div class="card-header">
+                            <h3><i class="fas fa-pills"></i> Your Medications</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="medications" id="medicationsList">
+                                <!-- Medications will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Appointments Section -->
+            <section class="section" id="appointments">
+                <div class="section-header">
+                    <h2>Appointments</h2>
+                    <p>Schedule and manage your medical appointments</p>
+                </div>
+
+                <div class="appointments-container">
+                    <div class="card schedule-appointment">
+                        <div class="card-header">
+                            <h3><i class="fas fa-calendar-plus"></i> Schedule New Appointment</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="appointment-form">
+                                <div class="input-row">
+                                    <div class="input-group">
+                                        <label for="doctorName">Doctor/Clinic</label>
+                                        <input type="text" id="doctorName" placeholder="Dr. Smith / City Hospital">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="appointmentType">Appointment Type</label>
+                                        <select id="appointmentType">
+                                            <option value="checkup">Regular Checkup</option>
+                                            <option value="consultation">Consultation</option>
+                                            <option value="followup">Follow-up</option>
+                                            <option value="emergency">Emergency</option>
+                                            <option value="specialist">Specialist Visit</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="input-row">
+                                    <div class="input-group">
+                                        <label for="appointmentDate">Date</label>
+                                        <input type="date" id="appointmentDate">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="appointmentTime">Time</label>
+                                        <input type="time" id="appointmentTime">
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label for="appointmentNotes">Notes</label>
+                                    <textarea id="appointmentNotes" placeholder="Reason for visit, symptoms, etc..."></textarea>
+                                </div>
+                                <button class="primary-btn" onclick="scheduleAppointment()">
+                                    <i class="fas fa-calendar-check"></i>
+                                    Schedule Appointment
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card upcoming-appointments">
+                        <div class="card-header">
+                            <h3><i class="fas fa-calendar-alt"></i> Upcoming Appointments</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="appointments-list" id="appointmentsList">
+                                <!-- Appointments will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for notifications -->
+    <div class="modal" id="notificationModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
